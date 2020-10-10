@@ -28,7 +28,7 @@ module.exports.addUserDetails = (req, res) => {
       )
       .then(() => {
         db.release();
-        res.json({ message: "Details added successfully" });
+        res.status(200).json({ message: "Details added successfully" });
       })
       .catch(err => {
         console.log(err);
@@ -78,7 +78,7 @@ module.exports.getUserDetails = async (req, res) => {
       })
   );
 
-  return res.json(userData);
+  return res.status(200).json(userData);
 };
 
 module.exports.getUserData = async (req, res) => {
@@ -155,7 +155,7 @@ module.exports.signup = async (req, res) => {
             return res.status(500).json({ message: "Something went wrong" });
           }
           const token = jwtGenerator({ username: email });
-          return res.status(200).json({ token });
+          return res.status(201).json({ token });
         }
       );
     }

@@ -84,7 +84,7 @@ module.exports.likePuzzlepiece = async (req, res) => {
       ])
       .then(() => {
         db.release();
-        return res.json(ppData);
+        return res.status(200).json(ppData);
       })
       .catch(err => {
         console.log(err);
@@ -112,7 +112,7 @@ module.exports.deletePuzzlepiece = (req, res) => {
         ])
           .then(() => {
             db.release();
-            res.json({ message: "Puzzle piece deleted. " });
+            res.status(200).json({ message: "Puzzle piece deleted. " });
           })
           .catch(err => {
             console.log(err);
@@ -169,7 +169,7 @@ module.exports.commentOnPuzzlepiece = (req, res) => {
             )
               .then(() => {
                 db.release();
-                return res.json(newC);
+                return res.status(201).json(newC);
               })
               .catch(err => {
                 console.log(err);
@@ -229,7 +229,7 @@ module.exports.getPuzzlepiece = async (req, res) => {
       })
   );
 
-  return res.json(puzzlepieceData);
+  return res.status(200).json(puzzlepieceData);
 };
 
 module.exports.getAllPuzzlepieces = (req, res) => {
@@ -242,7 +242,7 @@ module.exports.getAllPuzzlepieces = (req, res) => {
         data.rows.forEach(row => {
           puzzlepieces.push(convertPP(row));
         });
-        return res.json(puzzlepieces);
+        return res.status(200).json(puzzlepieces);
       })
       .catch(err => {
         console.log(err.stack);
@@ -292,7 +292,7 @@ module.exports.postPuzzlepiece = async (req, res) => {
       .then(data => {
         puzzle.release();
         newPP.puzzlepieceId = data.rows[0].id;
-        return res.json(newPP);
+        return res.status(201).json(newPP);
       })
       .catch(err => {
         console.log(err.stack);

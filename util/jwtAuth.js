@@ -1,6 +1,6 @@
 const { pool } = require("../util/dbConfig");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+require("dotenv").config("../.env");
 
 const { convertCredentials } = require("./toCamelCase");
 

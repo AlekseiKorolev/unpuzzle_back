@@ -1,12 +1,12 @@
-## REST API for puzzlepieces
+# REST API for puzzlepieces
 
 JavsScript, Node.js (express, bcrypt, body-parser, cors, dotenv, jsonwebtoken, pg, nodemon), Postgresql
 
-### user routes
+## user routes
 
-##### `/api/user`, GET, `auth`
+### `/api/user`, GET, `auth`
 
-_expected_: jwt token (header)
+_expected_: jwt token\
 _returned_:
 
 ```javascript
@@ -22,9 +22,9 @@ _returned_:
  }
 ```
 
-##### `/api/user/:handle`, GET
+### `/api/user/:handle`, GET
 
-_expected:_ user handle
+_expected:_ user handle\
 _returned:_
 
 ```javascript
@@ -52,7 +52,7 @@ _returned:_
     ]
 ```
 
-##### `/api/signup`, POST
+### `/api/signup`, POST
 
 _expected:_
 
@@ -67,7 +67,7 @@ _expected:_
 
 _returned:_ jwt token
 
-##### `/api/login`, POST
+### `/api/login`, POST
 
 expected:
 
@@ -80,7 +80,7 @@ expected:
 
 returned: jwt token
 
-##### `/api/user`, POST, `auth`
+### `/api/user`, POST, `auth`
 
 _expected:_ jwt token (header),
 
@@ -94,11 +94,11 @@ _expected:_ jwt token (header),
 
 _returned_: message
 
-### puzzlepiece routes
+## puzzlepiece routes
 
-##### `/puzzlepieces`, GET
+### `/puzzlepieces`, GET
 
-_expected:_ nothing
+_expected:_ nothing\
 _returned:_
 
 ```js
@@ -118,9 +118,9 @@ _returned:_
     ]
 ```
 
-##### `/puzzlepiece/:puzzlepieceId`, GET
+### `/puzzlepiece/:puzzlepieceId`, GET
 
-_expected:_ puzzlepieceId
+_expected:_ puzzlepieceId\
 _returned:_
 
 ```js
@@ -137,11 +137,11 @@ _returned:_
     }
 ```
 
-##### `/puzzlepiece/:puzzlepieceId/like`, GET, `auth`
+### `/puzzlepiece/:puzzlepieceId/like`, GET, `auth`
 
-##### `/puzzlepiece/:puzzlepieceId/unlike`, GET, `auth`
+### `/puzzlepiece/:puzzlepieceId/unlike`, GET, `auth`
 
-_expected:_ jwt token, puzzlepieceId
+_expected:_ jwt token, puzzlepieceId\
 _returned:_
 
 ```js
@@ -158,7 +158,7 @@ _returned:_
     }
 ```
 
-##### `/puzzlepiece`, POST, `auth`
+### `/puzzlepiece`, POST, `auth`
 
 _expected:_ jwt token
 
@@ -186,7 +186,7 @@ _returned:_
     }
 ```
 
-##### `/puzzlepiece/:puzzlepieceId/comment`, POST, `auth`
+### `/puzzlepiece/:puzzlepieceId/comment`, POST, `auth`
 
 _expected:_ jwt token, puzzlepieceId
 

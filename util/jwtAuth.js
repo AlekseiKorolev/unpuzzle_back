@@ -25,10 +25,13 @@ exports.jwtAuth = (req, res, next) => {
         `SELECT id, handle, email, createdat, imageurl, bio, website, location FROM users WHERE email = $1`,
         [email]
       )
-      .then(res => {
+      .then(data => {
         db.release();
-        req.user = convertCredentials(res.rows[0]);
-        next();
+        if (data.rows.length === 0) {
+          return res.status(404).json({ message: "User doesn't exist" });
+        }
+        req.user = convertCredentials(data.rows[0]);
+        return next();
       })
       .catch(err => {
         console.log(err.stack);

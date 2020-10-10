@@ -262,7 +262,7 @@ module.exports.postPuzzlepiece = async (req, res) => {
   const newPP = {
     body: req.body.body,
     userHandle: req.user.handle,
-    userImage: req.user.imageurl,
+    userImage: req.user.imageUrl,
     ppType: req.body.ppType ? req.body.ppType : null,
     ppURL: req.body.ppURL ? req.body.ppURL : null,
     createdAt: new Date().toISOString(),

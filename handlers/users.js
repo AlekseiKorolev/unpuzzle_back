@@ -40,15 +40,34 @@ module.exports.addUserDetails = (req, res) => {
 
 module.exports.getUserDetails = async (req, res) => {
   let userData = {};
-  userData.user = await pool.connect().then(db =>
+  pool.connect().then(db =>
     db
       .query(`SELECT * FROM users WHERE handle = $1`, [req.params.handle])
       .then(data => {
-        db.release();
         if (data.rows.length === 0) {
           return res.status(404).json({ error: "User not found." });
         }
-        return convertCredentials(data.rows[0]);
+        userData.user = convertCredentials(data.rows[0]);
+      })
+      .then(() => {
+        db.query(
+          `SELECT * FROM puzzlepieces WHERE userhandle = $1 ORDER BY createdat DESC`,
+          [req.params.handle]
+        )
+          .then(data => {
+            db.release();
+            const puzzlepieces = [];
+            data.rows.forEach(row => {
+              puzzlepieces.push(convertPPMin(row));
+            });
+            userData.puzzlepieces = puzzlepieces;
+            return res.status(200).json(userData);
+          })
+          .catch(err => {
+            console.log(err.stack);
+            db.release();
+            return res.status(500).json({ message: "Something went wrong" });
+          });
       })
       .catch(err => {
         console.log(err);
@@ -56,29 +75,6 @@ module.exports.getUserDetails = async (req, res) => {
         return res.status(500).json({ error: err.code });
       })
   );
-
-  userData.puzzlepieces = await pool.connect().then(db =>
-    db
-      .query(
-        `SELECT * FROM puzzlepieces WHERE userhandle = $1 ORDER BY createdat DESC`,
-        [req.params.handle]
-      )
-      .then(data => {
-        db.release();
-        const puzzlepieces = [];
-        data.rows.forEach(row => {
-          puzzlepieces.push(convertPPMin(row));
-        });
-        return puzzlepieces;
-      })
-      .catch(err => {
-        console.log(err.stack);
-        db.release();
-        return res.status(500).json({ message: "Something went wrong" });
-      })
-  );
-
-  return res.status(200).json(userData);
 };
 
 module.exports.getUserData = async (req, res) => {
